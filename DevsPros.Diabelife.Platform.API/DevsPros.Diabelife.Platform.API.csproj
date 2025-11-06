@@ -23,4 +23,11 @@
         <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="8.1.2"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="HealthyLife\application\" />
+      <Folder Include="HealthyLife\domain\model\" />
+      <Folder Include="HealthyLife\infrastructure\" />
+      <Folder Include="HealthyLife\interfaces\" />
+    </ItemGroup>
+
 </Project>
