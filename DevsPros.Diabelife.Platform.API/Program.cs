@@ -1,41 +1,105 @@
+using DevsPros.Diabelife.Platform.API.HealthyLife.Application.Internal.CommandServices;
+using DevsPros.Diabelife.Platform.API.HealthyLife.Application.Internal.OutboundServices;
+using DevsPros.Diabelife.Platform.API.HealthyLife.Application.Internal.QueryServices;
+using DevsPros.Diabelife.Platform.API.HealthyLife.Domain.Repositories;
+using DevsPros.Diabelife.Platform.API.HealthyLife.Infrastructure.Persistence.EFC.Repositories;
+using DevsPros.Diabelife.Platform.API.Shared.Infrastructure.Persistence.EFC.Configuration;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+
+// Configure Swagger/OpenAPI
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo 
+    { 
+        Title = "DiabeLife API", 
+        Version = "v1",
+        Description = "API for managing diabetes health metrics, food data, and recommendations",
+        Contact = new OpenApiContact
+        {
+            Name = "DevsPros Team",
+            Email = "devspros@diabelife.com"
+        }
+    });
+    c.EnableAnnotations();
+});
+
+// Configure CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowNetlifyFrontend", policy =>
+    {
+        policy.WithOrigins("https://diabelife-frontend.netlify.app")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+    
+    options.AddPolicy("AllowDevelopment", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+// Configure MySQL Database
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
+    ?? "Server=localhost;Database=diabelife;Uid=root;Pwd=password;";
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options.UseMySQL(connectionString);
+});
+
+// Register Repositories
+builder.Services.AddScoped<IHealthMetricRepository, HealthMetricRepository>();
+builder.Services.AddScoped<IRecommendationRepository, RecommendationRepository>();
+builder.Services.AddScoped<IFoodDataRepository, FoodDataRepository>();
+
+// Register Command Services
+builder.Services.AddScoped<IHealthMetricCommandService, HealthMetricCommandService>();
+builder.Services.AddScoped<IRecommendationCommandService, RecommendationCommandService>();
+builder.Services.AddScoped<IFoodDataCommandService, FoodDataCommandService>();
+
+// Register Query Services
+builder.Services.AddScoped<IHealthMetricQueryService, HealthMetricQueryService>();
+builder.Services.AddScoped<IRecommendationQueryService, RecommendationQueryService>();
+builder.Services.AddScoped<IFoodDataQueryService, FoodDataQueryService>();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "DiabeLife API v1");
+        c.RoutePrefix = string.Empty; // Makes Swagger UI the default page
+    });
+    app.UseCors("AllowDevelopment");
+}
+else
+{
+    app.UseCors("AllowNetlifyFrontend");
 }
 
 app.UseHttpsRedirection();
+app.UseAuthorization();
+app.MapControllers();
 
-var summaries = new[]
+// Ensure database is created
+using (var scope = app.Services.CreateScope())
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-    {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
-    })
-    .WithName("GetWeatherForecast");
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    context.Database.EnsureCreated();
+}
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
