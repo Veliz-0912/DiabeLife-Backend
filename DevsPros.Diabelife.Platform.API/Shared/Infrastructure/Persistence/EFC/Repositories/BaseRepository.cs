@@ -1,4 +1,4 @@
-using CatchUpPlatform.API.Shared.Domain.Repositories;
+using DevsPros.Diabelife.Platform.API.Shared.Domain.Repositories;
 using DevsPros.Diabelife.Platform.API.Shared.Infrastructure.Persistence.EFC.Configuration;
 using Microsoft.EntityFrameworkCore;
 
