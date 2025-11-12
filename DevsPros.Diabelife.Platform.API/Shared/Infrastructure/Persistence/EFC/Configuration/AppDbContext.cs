@@ -82,6 +82,7 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
             entity.Property(n => n.IsRead).HasColumnName("is_read").IsRequired();
             entity.Property(n => n.CreatedAt).HasColumnName("created_at").IsRequired();
             entity.Property(n => n.UpdatedAt).HasColumnName("updated_at").IsRequired();
+        });
         // Appointment Entity Configuration
         builder.Entity<AppointmentEntity>(entity =>
         {
