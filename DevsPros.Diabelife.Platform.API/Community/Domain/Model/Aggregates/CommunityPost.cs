@@ -36,7 +36,7 @@ public class CommunityPost
     // Agregar comentario
     public void AddComment(AuthorId authorId, Content content)
     {
-        var comment = new Comment(authorId, content);
+        var comment = new Comment(authorId, content, Id);
         Comments.Add(comment);
         AddDomainEvent(new CommentAddedEvent(Id.Value, authorId.Value, content.Value));
     }
