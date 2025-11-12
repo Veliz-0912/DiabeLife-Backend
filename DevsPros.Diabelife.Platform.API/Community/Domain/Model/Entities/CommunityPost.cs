@@ -7,6 +7,7 @@ public class CommunityPost
     public CommunityPostId Id { get; private set; }
     public AuthorId AuthorId { get; private set; }
     public Content Content { get; private set; }
+    
     public ImageUrl? ImageUrl { get; private set; }
     public DateTime CreatedAt { get; private set; }
     
@@ -17,7 +18,7 @@ public class CommunityPost
 
     public CommunityPost(AuthorId authorId, Content content, ImageUrl? imageUrl = null)
     {
-        Id = new CommunityPostId();
+        Id = CommunityPostId.NewId();
         AuthorId = authorId;
         Content = content;
         ImageUrl = imageUrl;

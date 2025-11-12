@@ -25,16 +25,17 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
     {
         base.OnModelCreating(builder);
 
-        // CommunityPost <-> Comments
+        // CommunityPost <-> Comments (1:N)
         builder.Entity<CommunityPost>()
             .HasMany(p => p.Comments)
-            .WithOne(c => c.PostId)
+            .WithOne() // no hay propiedad de navegación al post en Comment
             .HasForeignKey(c => c.PostId);
 
-        // ValueObject conversions
+        // ValueObject conversions for CommunityPost
         builder.Entity<CommunityPost>()
             .Property(p => p.Id)
-            .HasConversion(v => v.Value, v => new CommunityPostId(v));
+            .HasConversion(v => v.Value, v => new CommunityPostId(v))
+            .ValueGeneratedNever();
 
         builder.Entity<CommunityPost>()
             .Property(p => p.AuthorId)
@@ -44,9 +45,14 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
             .Property(p => p.Content)
             .HasConversion(v => v.Value, v => new Content(v));
 
+        builder.Entity<CommunityPost>()
+            .Property(p => p.ImageUrl)
+            .HasConversion(v => v == null ? null : v.Value, v => v == null ? null : new ImageUrl(v));
+
+        // ValueObject conversions for Comment
         builder.Entity<Comment>()
             .Property(c => c.Id)
-            .HasConversion(v => v, v => v); // Guid no necesita wrapper
+            .ValueGeneratedNever();
 
         builder.Entity<Comment>()
             .Property(c => c.AuthorId)
@@ -56,6 +62,11 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
             .Property(c => c.Content)
             .HasConversion(v => v.Value, v => new Content(v));
 
+        builder.Entity<Comment>()
+            .Property(c => c.PostId)
+            .HasConversion(v => v.Value, v => new CommunityPostId(v));
+
+        // Naming convention
         builder.UseSnakeCaseNamingConvention();
     }
 }

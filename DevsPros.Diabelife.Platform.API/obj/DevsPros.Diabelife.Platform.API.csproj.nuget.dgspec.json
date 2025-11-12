@@ -1,26 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "/Users/alumnos/Documents/appweb/DiabeLife-Backend/DevsPros.Diabelife.Platform.API/DevsPros.Diabelife.Platform.API.csproj": {}
+    "F:\\DiabeLife-Backendddd\\DevsPros.Diabelife.Platform.API\\DevsPros.Diabelife.Platform.API.csproj": {}
   },
   "projects": {
-    "/Users/alumnos/Documents/appweb/DiabeLife-Backend/DevsPros.Diabelife.Platform.API/DevsPros.Diabelife.Platform.API.csproj": {
+    "F:\\DiabeLife-Backendddd\\DevsPros.Diabelife.Platform.API\\DevsPros.Diabelife.Platform.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/alumnos/Documents/appweb/DiabeLife-Backend/DevsPros.Diabelife.Platform.API/DevsPros.Diabelife.Platform.API.csproj",
+        "projectUniqueName": "F:\\DiabeLife-Backendddd\\DevsPros.Diabelife.Platform.API\\DevsPros.Diabelife.Platform.API.csproj",
         "projectName": "DevsPros.Diabelife.Platform.API",
-        "projectPath": "/Users/alumnos/Documents/appweb/DiabeLife-Backend/DevsPros.Diabelife.Platform.API/DevsPros.Diabelife.Platform.API.csproj",
-        "packagesPath": "/Users/alumnos/.nuget/packages/",
-        "outputPath": "/Users/alumnos/Documents/appweb/DiabeLife-Backend/DevsPros.Diabelife.Platform.API/obj/",
+        "projectPath": "F:\\DiabeLife-Backendddd\\DevsPros.Diabelife.Platform.API\\DevsPros.Diabelife.Platform.API.csproj",
+        "packagesPath": "C:\\Users\\betitio\\.nuget\\packages\\",
+        "outputPath": "F:\\DiabeLife-Backendddd\\DevsPros.Diabelife.Platform.API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/alumnos/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\betitio\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
-          "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -39,7 +38,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0": {
@@ -121,7 +120,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.200/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Users\\betitio\\.dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

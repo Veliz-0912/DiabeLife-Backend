@@ -11,7 +11,6 @@ public class CommunityPostRepository : BaseRepository<CommunityPost, Guid>, ICom
 {
     public CommunityPostRepository(AppDbContext context) : base(context) { }
 
-    // Buscar por Id usando el ValueObject
     public async Task<CommunityPost?> FindByIdAsync(CommunityPostId postId)
     {
         return await Context.Set<CommunityPost>()

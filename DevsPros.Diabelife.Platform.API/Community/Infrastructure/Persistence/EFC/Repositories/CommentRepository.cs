@@ -10,10 +10,10 @@ namespace DevsPros.Diabelife.Platform.API.Community.Infrastructure.Persistence.E
 public class CommentRepository(AppDbContext context)
     : BaseRepository<Comment, Guid>(context), ICommentRepository
 {
-    public async Task<IEnumerable<Comment>> FindByPostIdAsync(Guid postId)
+    public async Task<IEnumerable<Comment>> FindByPostIdAsync(CommunityPostId postId)
     {
         return await Context.Set<Comment>()
-            .Where(c => c.PostId.Value == postId)
+            .Where(c => c.PostId.Value == postId.Value)
             .ToListAsync();
     }
 

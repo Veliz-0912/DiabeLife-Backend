@@ -23,9 +23,10 @@ public class CommunityCommandService(
 
     public async Task<CommunityPost?> Handle(AddCommentCommand command)
     {
-        var post = await postRepository.FindByIdAsync(command.PostId);
+        var postId = new CommunityPostId(command.PostId);
+        var post = await postRepository.FindByIdAsync(postId);
         if (post is null)
-            throw new Exception("Post no encontrado.");
+            throw new KeyNotFoundException("El post no fue encontrado.");
 
         post.AddComment(new AuthorId(command.AuthorId), new Content(command.Content));
         await unitOfWork.CompleteAsync();
@@ -34,22 +35,24 @@ public class CommunityCommandService(
 
     public async Task<CommunityPost?> Handle(AddLikeCommand command)
     {
-        var post = await postRepository.FindByIdAsync(command.PostId);
+        var postId = new CommunityPostId(command.PostId);
+        var post = await postRepository.FindByIdAsync(postId);
         if (post is null)
-            throw new Exception("Post no encontrado.");
+            throw new KeyNotFoundException("El post no fue encontrado.");
 
         post.AddLike(new AuthorId(command.AuthorId));
         await unitOfWork.CompleteAsync();
         return post;
     }
 
-    public async Task Handle(DeletePostCommand command)
+    public async Task<bool> Handle(DeletePostCommand command)
     {
-        var post = await postRepository.FindByIdAsync(command.PostId);
-        if (post is null)
-            throw new Exception("Post no encontrado.");
+        var postId = new CommunityPostId(command.PostId);
+        var post = await postRepository.FindByIdAsync(postId);
+        if (post is null) return false;
 
         postRepository.Remove(post);
         await unitOfWork.CompleteAsync();
+        return true;
     }
 }

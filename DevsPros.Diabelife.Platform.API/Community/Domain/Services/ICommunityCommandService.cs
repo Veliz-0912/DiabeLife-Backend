@@ -9,5 +9,5 @@ public interface ICommunityCommandService
     Task<CommunityPost?> Handle(CreatePostCommand command);
     Task<CommunityPost?> Handle(AddCommentCommand command);
     Task<CommunityPost?> Handle(AddLikeCommand command);
-    Task Handle(DeletePostCommand command);
+    Task<bool> Handle(DeletePostCommand command);
 }

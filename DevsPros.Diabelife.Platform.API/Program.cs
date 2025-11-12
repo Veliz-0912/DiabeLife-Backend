@@ -1,106 +1,37 @@
-using ACME.LearningCenterPlatform.API.Shared.Infrastructure.Persistence.EFC.Configuration;
-using DevsPros.Diabelife.Platform.API.HealthyLife.Application.Internal.CommandServices;
-using DevsPros.Diabelife.Platform.API.HealthyLife.Application.Internal.OutboundServices;
-using DevsPros.Diabelife.Platform.API.HealthyLife.Application.Internal.QueryServices;
-using DevsPros.Diabelife.Platform.API.HealthyLife.Domain.Repositories;
-using DevsPros.Diabelife.Platform.API.HealthyLife.Infrastructure.Persistence.EFC.Repositories;
-using DevsPros.Diabelife.Platform.API.Shared.Infrastructure.Persistence.EFC.Configuration;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
+using ACME.LearningCenterPlatform.API.Shared.Infrastructure.Documentation.OpenApi.Configuration.Extensions;
+using ACME.LearningCenterPlatform.API.Shared.Infrastructure.Interfaces.ASP.Configuration;
+using ACME.LearningCenterPlatform.API.Shared.Infrastructure.Interfaces.ASP.Configuration.Extensions;
+using ACME.LearningCenterPlatform.API.Shared.Infrastructure.Mediator.Cortex.Configuration.Extensions;
+using DevsPros.Diabelife.Platform.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
+using DevsPros.Diabelife.Platform.API.Community.Infrastructure.Interfaces.ASP.Configuration.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
+// Controllers with kebab-case routes
+builder.Services.AddControllers(options =>
+    options.Conventions.Add(new KebabCaseRouteNamingConvention()));
 
-// Configure Swagger/OpenAPI
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo 
-    { 
-        Title = "DiabeLife API", 
-        Version = "v1",
-        Description = "API for managing diabetes health metrics, food data, and recommendations",
-        Contact = new OpenApiContact
-        {
-            Name = "DevsPros Team",
-            Email = "devspros@diabelife.com"
-        }
-    });
-    c.EnableAnnotations();
-});
+// Database configuration
+builder.AddDatabaseServices();
 
-// Configure CORS
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowNetlifyFrontend", policy =>
-    {
-        policy.WithOrigins("https://diabelife-frontend.netlify.app")
-              .AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials();
-    });
-    
-    options.AddPolicy("AllowDevelopment", policy =>
-    {
-        policy.AllowAnyOrigin()
-              .AllowAnyHeader()
-              .AllowAnyMethod();
-    });
-});
+// Swagger / OpenAPI configuration
+builder.AddOpenApiDocumentationServices();
 
-// Configure MySQL Database
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
-    ?? "Server=localhost;Database=diabelife;Uid=root;Pwd=password;";
+// Register all bounded contexts (modular structure)
+builder.AddSharedContextServices();
+builder.AddCommunityContextServices();
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-{
-    options.UseMySQL(connectionString);
-});
-
-// Register Repositories
-builder.Services.AddScoped<IHealthMetricRepository, HealthMetricRepository>();
-builder.Services.AddScoped<IRecommendationRepository, RecommendationRepository>();
-builder.Services.AddScoped<IFoodDataRepository, FoodDataRepository>();
-
-// Register Command Services
-builder.Services.AddScoped<IHealthMetricCommandService, HealthMetricCommandService>();
-builder.Services.AddScoped<IRecommendationCommandService, RecommendationCommandService>();
-builder.Services.AddScoped<IFoodDataCommandService, FoodDataCommandService>();
-
-// Register Query Services
-builder.Services.AddScoped<IHealthMetricQueryService, HealthMetricQueryService>();
-builder.Services.AddScoped<IRecommendationQueryService, RecommendationQueryService>();
-builder.Services.AddScoped<IFoodDataQueryService, FoodDataQueryService>();
+// Mediator or CQRS configuration
+builder.AddCortexConfigurationServices();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "DiabeLife API v1");
-        c.RoutePrefix = string.Empty; // Makes Swagger UI the default page
-    });
-    app.UseCors("AllowDevelopment");
-}
-else
-{
-    app.UseCors("AllowNetlifyFrontend");
-}
+// Database assurance
+app.UseDatabaseCreationAssurance();
 
+// Middleware pipeline
+app.UseOpenApiDocumentation();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
-
-// Ensure database is created
-using (var scope = app.Services.CreateScope())
-{
-    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    context.Database.EnsureCreated();
-}
-
 app.Run();

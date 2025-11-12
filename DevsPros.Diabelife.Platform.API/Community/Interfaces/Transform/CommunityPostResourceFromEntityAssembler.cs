@@ -1,4 +1,4 @@
-using DevsPros.Diabelife.Platform.API.Community.Domain.Model.Entities;
+using DevsPros.Diabelife.Platform.API.Community.Domain.Model.Aggregates;
 using DevsPros.Diabelife.Platform.API.Community.Interfaces.Resources;
 
 namespace DevsPros.Diabelife.Platform.API.Community.Interfaces.Transform;
@@ -13,8 +13,7 @@ public static class CommunityPostResourceFromEntityAssembler
             entity.AuthorId.Value,
             entity.ImageUrl?.Value,
             entity.Likes,
-            entity.Comments.Count 
+            entity.Comments.Count
         );
-
     }
 }

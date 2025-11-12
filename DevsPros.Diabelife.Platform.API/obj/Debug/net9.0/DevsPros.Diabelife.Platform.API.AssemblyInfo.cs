@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DevsPros.Diabelife.Platform.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f58f7394cc1299d6d901ebdfaf02aa9abc749e40")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+72c0abbda5f4b551e5d6a1c6267f29f08a32ccc8")]
 [assembly: System.Reflection.AssemblyProductAttribute("DevsPros.Diabelife.Platform.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DevsPros.Diabelife.Platform.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
