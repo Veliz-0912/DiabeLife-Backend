@@ -43,7 +43,7 @@
     <ItemGroup>
         <!-- Community module folders -->
         <Folder Include="bin\" />
-        <Folder Include="Community\Infrastructure\" />
+        <Folder Include="Community\Infrastructure\Persistence\EFC\Configuration\Extensions\" />
         <Folder Include="Community\Interfaces\REST\" />
 
         <!-- HealthyLife module folders -->

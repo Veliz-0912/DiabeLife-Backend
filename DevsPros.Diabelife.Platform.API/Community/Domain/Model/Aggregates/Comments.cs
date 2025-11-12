@@ -9,9 +9,12 @@ public partial class Comments
     private readonly List<Comment> _comments = new();
     public IReadOnlyCollection<Comment> All => _comments.AsReadOnly();
 
-    public void Add(AddCommentCommand command)
+    public void Add(AddCommentCommand command, CommunityPostId postId)
     {
-        var comment = new Comment(new AuthorId(command.AuthorId), new Content(command.Content));
+        var comment = new Comment(
+            new AuthorId(command.AuthorId),
+            new Content(command.Content),
+            postId); 
         _comments.Add(comment);
     }
 }
