@@ -3,6 +3,11 @@ using DevsPros.Diabelife.Platform.API.HealthyLife.Application.Internal.OutboundS
 using DevsPros.Diabelife.Platform.API.HealthyLife.Application.Internal.QueryServices;
 using DevsPros.Diabelife.Platform.API.HealthyLife.Domain.Repositories;
 using DevsPros.Diabelife.Platform.API.HealthyLife.Infrastructure.Persistence.EFC.Repositories;
+using DevsPros.Diabelife.Platform.API.Appointment.Application.Internal.CommandServices;
+using DevsPros.Diabelife.Platform.API.Appointment.Application.Internal.OutboundServices;
+using DevsPros.Diabelife.Platform.API.Appointment.Application.Internal.QueryServices;
+using DevsPros.Diabelife.Platform.API.Appointment.Domain.Repositories;
+using DevsPros.Diabelife.Platform.API.Appointment.Infrastructure.Persistence.EFC.Repositories;
 using DevsPros.Diabelife.Platform.API.Shared.Infrastructure.Persistence.EFC.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -62,16 +67,19 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IHealthMetricRepository, HealthMetricRepository>();
 builder.Services.AddScoped<IRecommendationRepository, RecommendationRepository>();
 builder.Services.AddScoped<IFoodDataRepository, FoodDataRepository>();
+builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 
 // Register Command Services
 builder.Services.AddScoped<IHealthMetricCommandService, HealthMetricCommandService>();
 builder.Services.AddScoped<IRecommendationCommandService, RecommendationCommandService>();
 builder.Services.AddScoped<IFoodDataCommandService, FoodDataCommandService>();
+builder.Services.AddScoped<IAppointmentCommandService, AppointmentCommandService>();
 
 // Register Query Services
 builder.Services.AddScoped<IHealthMetricQueryService, HealthMetricQueryService>();
 builder.Services.AddScoped<IRecommendationQueryService, RecommendationQueryService>();
 builder.Services.AddScoped<IFoodDataQueryService, FoodDataQueryService>();
+builder.Services.AddScoped<IAppointmentQueryService, AppointmentQueryService>();
 
 var app = builder.Build();
 
