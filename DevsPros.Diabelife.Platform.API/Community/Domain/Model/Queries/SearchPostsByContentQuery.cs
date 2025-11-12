@@ -1,3 +1,3 @@
 namespace DevsPros.Diabelife.Platform.API.Community.Domain.Model.Queries;
 
-public record SearchPostsByContentQuery(string Keyword);
+public record SearchPostsByContentQuery(string Content);
