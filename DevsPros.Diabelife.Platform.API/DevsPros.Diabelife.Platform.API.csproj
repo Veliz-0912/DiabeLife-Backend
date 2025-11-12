@@ -44,7 +44,6 @@
         <!-- Community module folders -->
         <Folder Include="bin\" />
         <Folder Include="Community\Application\Internal\" />
-        <Folder Include="Community\Domain\Service\" />
         <Folder Include="Community\Infrastructure\" />
         <Folder Include="Community\Interfaces\REST\" />
 
