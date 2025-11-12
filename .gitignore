@@ -1,0 +1,18 @@
+# Build outputs
+bin/
+obj/
+out/
+
+# Generated files (anywhere)
+*.dll
+*.exe
+*.pdb
+*.cache
+*.nuget.*
+*.deps.json
+*.runtimeconfig.json
+*.staticwebassets.*
+
+# IDEs
+.idea/
+.vs/

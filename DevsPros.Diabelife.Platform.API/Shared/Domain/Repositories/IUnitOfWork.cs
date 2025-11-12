@@ -1,15 +1,13 @@
-namespace CatchUpPlatform.API.Shared.Domain.Repositories;
+namespace DevsPros.Diabelife.Platform.API.Shared.Domain.Repositories;
 
 /// <summary>
-///     Unit of work interface
+///     Defines the contract for a unit of work pattern to manage transactions and save changes.
 /// </summary>
-/// <remarks>
-///     This interface defines the basic operations for a unit of work
-/// </remarks>
 public interface IUnitOfWork
 {
     /// <summary>
-    ///     Commit changes to the database
+    ///     Asynchronously completes the unit of work by saving all changes.
     /// </summary>
+    /// <returns>A task representing the asynchronous operation.</returns>
     Task CompleteAsync();
 }

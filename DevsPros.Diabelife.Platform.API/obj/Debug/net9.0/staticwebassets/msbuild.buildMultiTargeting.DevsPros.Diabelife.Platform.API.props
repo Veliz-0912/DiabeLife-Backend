@@ -1,0 +1,3 @@
+<Project>
+  <Import Project="../build/DevsPros.Diabelife.Platform.API.props" />
+</Project>
