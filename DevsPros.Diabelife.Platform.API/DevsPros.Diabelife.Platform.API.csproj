@@ -28,6 +28,13 @@
       <Folder Include="HealthyLife\domain\model\" />
       <Folder Include="HealthyLife\infrastructure\" />
       <Folder Include="HealthyLife\interfaces\" />
+      <Folder Include="Notifications\application\internal\commandservices\" />
+      <Folder Include="Notifications\application\internal\outboundservices\" />
+      <Folder Include="Notifications\application\internal\queryservices\" />
+      <Folder Include="Notifications\domain\model\" />
+      <Folder Include="Notifications\domain\repositories\" />
+      <Folder Include="Notifications\infrastructure\persistence\EFC\Repositories\" />
+      <Folder Include="Notifications\interface\REST\" />
     </ItemGroup>
 
 </Project>
