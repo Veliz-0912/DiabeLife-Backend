@@ -24,6 +24,13 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Appointment\application\internal\commandservices\" />
+      <Folder Include="Appointment\application\internal\outboundservices\" />
+      <Folder Include="Appointment\application\internal\queryservices\" />
+      <Folder Include="Appointment\domain\model\" />
+      <Folder Include="Appointment\domain\repositories\" />
+      <Folder Include="Appointment\infrastructure\persistence\EFC\Repositories\" />
+      <Folder Include="Appointment\interfaces\REST\" />
       <Folder Include="HealthyLife\application\" />
       <Folder Include="HealthyLife\domain\model\" />
       <Folder Include="HealthyLife\infrastructure\" />
