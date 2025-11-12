@@ -1,6 +1,6 @@
 namespace DevsPros.Diabelife.Platform.API.Community.Domain.Model.ValueObjects;
 
-public class ImageUrl
+public record ImageUrl(string? Value)
 {
-    
+    public bool HasImage => !string.IsNullOrEmpty(Value);
 }
