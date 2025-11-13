@@ -1,0 +1,6 @@
+@DevsPros.Diabelife.Platform.API_HostAddress = http://localhost:5015
+
+GET {{DevsPros.Diabelife.Platform.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
